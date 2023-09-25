@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:5000
+    volumes:
+      - .:/src
+    env_file:
+      - .env
+    environment:
+      - BACKEND_PORT=5000
+
+    restart: on-failure
+    network_mode: host
