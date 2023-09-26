@@ -7,7 +7,6 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
-        "src.includes.drf_helpers.permissions.AppModelPermissions",
     ],
     # "EXCEPTION_HANDLER": "src.includes.errors.exception_handler.api_exception_handler",
     "COMPONENT_SPLIT_REQUEST": True,

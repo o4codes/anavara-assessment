@@ -33,12 +33,3 @@ class MedicalRecordSerializer(serializers.ModelSerializer):
             )
         return value
 
-    def update(self, instance, validated_data):
-        if instance.doctor != validated_data.get("doctor"):
-            raise PermissionDenied(
-                detail={
-                    "message": "Inadequate Permission to edit this medical record"
-                }
-            )
-        return super().update(instance, validated_data)
-
