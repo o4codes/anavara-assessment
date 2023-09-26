@@ -45,7 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryM
         max_length=10, choices=UserRoles.choices, null=True, blank=False
     )
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["email"]
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
