@@ -39,15 +39,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Third Party Apps
     "django_filters",
     "rest_framework",
     "drf_spectacular",
-
     # Local Apps
     "src.apps.users",
-    "src.apps.medical_records"
+    "src.apps.medical_records",
 ]
 
 MIDDLEWARE = [
@@ -115,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

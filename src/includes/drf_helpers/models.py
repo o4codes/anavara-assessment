@@ -3,14 +3,14 @@ import uuid
 from django.db import models
 
 
-class UUIDPrimaryKey(models.Model):
+class UUIDPrimaryKeyMixin(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         abstract = True
 
 
-class DateHistoryTracker(models.Model):
+class DateHistoryMixin(models.Model):
     """
     Tracks date of creation and modification
     """
@@ -22,7 +22,7 @@ class DateHistoryTracker(models.Model):
         abstract = True
 
 
-class UserHistoryTracker(models.Model):
+class UserHistoryMixin(models.Model):
     """
     Tracks user who created and updated the table record
     """
@@ -34,7 +34,7 @@ class UserHistoryTracker(models.Model):
         abstract = True
 
 
-class AbstractValidateModel(models.Model):
+class BaseValidateMixin(models.Model):
     class Meta:
         abstract = True
 
