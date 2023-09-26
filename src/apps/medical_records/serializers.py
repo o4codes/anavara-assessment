@@ -8,28 +8,23 @@ from .models import MedicalRecord
 
 class MedicalRecordSerializer(serializers.ModelSerializer):
     doctor_id = serializers.HiddenField(
-        source="doctor",
-        write_only=True,
-        default=serializers.CurrentUserDefault()
+        source="doctor", write_only=True, default=serializers.CurrentUserDefault()
     )
     patient_id = serializers.PrimaryKeyRelatedField(
         queryset=get_user_model().objects.filter(role=user_enums.UserRoles.PATIENT),
         source="patient",
-        write_only=True
+        write_only=True,
     )
 
     class Meta:
         model = MedicalRecord
-        fields = '__all__'
-        read_only_fields = ['mrid', 'created_at', 'updated_at', "patient", "doctor"]
+        fields = "__all__"
+        read_only_fields = ["mrid", "created_at", "updated_at", "patient", "doctor"]
         depth = 2
 
     def validate_doctor(self, value: get_user_model()):
         if value.role != user_enums.UserRoles.DOCTOR:
             raise serializers.ValidationError(
-                {
-                    "message": "Only doctors can create medical records"
-                }
+                {"message": "Only doctors can create medical records"}
             )
         return value
-

@@ -10,7 +10,7 @@ from .serializers import MedicalRecordSerializer
 
 
 class MedicalRecordViewSet(ModelViewSet):
-    queryset = MedicalRecord.objects.all().select_related('doctor', 'patient')
+    queryset = MedicalRecord.objects.all().select_related("doctor", "patient")
     serializer_class = MedicalRecordSerializer
     permission_classes = [IsAuthenticated, UserPermission]
     filter_backends = [
@@ -19,7 +19,5 @@ class MedicalRecordViewSet(ModelViewSet):
         filters.SearchFilter,
     ]
     filterset_class = MedicalRecordFilter
-    ordering_fields = ['created_at', 'updated_at', 'mrid']
-    search_fields = ['mrid', 'treatment', 'diagnosis']
-
-
+    ordering_fields = ["created_at", "updated_at", "mrid"]
+    search_fields = ["mrid", "treatment", "diagnosis"]
