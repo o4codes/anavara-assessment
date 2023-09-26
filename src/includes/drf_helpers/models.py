@@ -22,18 +22,6 @@ class DateHistoryMixin(models.Model):
         abstract = True
 
 
-class UserHistoryMixin(models.Model):
-    """
-    Tracks user who created and updated the table record
-    """
-
-    created_by: dict = models.JSONField(default=dict)
-    updated_by: dict = models.JSONField(default=dict)
-
-    class Meta:
-        abstract = True
-
-
 class BaseValidateMixin(models.Model):
     class Meta:
         abstract = True

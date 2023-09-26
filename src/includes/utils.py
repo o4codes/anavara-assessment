@@ -1,12 +1,12 @@
 import json
 import re
 import threading
-from datetime import timezone
 from functools import reduce
 from typing import TypeVar, Set, Union, Type
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Model
+from django.utils import timezone
 from rest_framework import serializers
 
 DJANGO_MODEL = TypeVar("DJANGO_MODEL", bound=Model)
@@ -22,14 +22,14 @@ def str_to_bool(value: Union[str, bool]) -> bool:
 
 def model_to_dict(
     instance: DJANGO_MODEL,
-    exclude_fields: Set[str] = set(),
+    exclude_fields: Set[str] = None,
     **kwargs,
 ):
     """
     Convert a model instance to dict.
     """
-
-    exclude_fields = {field for field in exclude_fields if hasattr(instance, field)}
+    if exclude_fields:
+        exclude_fields = {field for field in exclude_fields if hasattr(instance, field)}
 
     class Serializer(serializers.ModelSerializer):
         class Meta:

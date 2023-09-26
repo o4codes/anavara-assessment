@@ -56,8 +56,9 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryM
 class PatientProfile(UUIDPrimaryKeyMixin, BaseValidateMixin):
     UHID_PREFIX = "PAT"
     uhid = models.CharField(
-        max_length=10,
-        null=True,
+        max_length=20,
+        null=False,
+        blank=False,
         editable=False,
         unique=True,
         help_text=_("Unique Patient Public ID"),
@@ -84,8 +85,9 @@ class PatientProfile(UUIDPrimaryKeyMixin, BaseValidateMixin):
 class DoctorProfile(UUIDPrimaryKeyMixin, BaseValidateMixin):
     UMID_PREFIX = "DOC"
     umid = models.CharField(
-        max_length=10,
-        null=True,
+        max_length=20,
+        null=False,
+        blank=False,
         editable=False,
         unique=True,
         help_text=_("Unique Doctor Public ID"),
