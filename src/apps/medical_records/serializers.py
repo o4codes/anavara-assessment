@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 
 from src.apps.users import enums as user_enums
 from .models import MedicalRecord
@@ -31,4 +32,13 @@ class MedicalRecordSerializer(serializers.ModelSerializer):
                 }
             )
         return value
+
+    def update(self, instance, validated_data):
+        if instance.doctor != validated_data.get("doctor"):
+            raise PermissionDenied(
+                detail={
+                    "message": "Inadequate Permission to edit this medical record"
+                }
+            )
+        return super().update(instance, validated_data)
 

@@ -48,6 +48,11 @@ class MedicalRecord(
         verbose_name = "Medical Record"
         verbose_name_plural = "Medical Records"
         ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["mrid"]),
+            models.Index(fields=["created_at"]),
+            models.Index(fields=["updated_at"]),
+        ]
 
     def __str__(self):
         return self.mrid
