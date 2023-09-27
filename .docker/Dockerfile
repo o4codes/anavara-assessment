@@ -22,3 +22,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project code into the container
 COPY . /app/
+RUN chmod +x .docker/dev_web_entrypoint.sh
+ENTRYPOINT [".docker/dev_web_entrypoint.sh"]
