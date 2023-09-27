@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
@@ -35,7 +34,7 @@ class DoctorProfileSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = PROFILE_EXCLUDE_FIELDS
+        exclude = USER_EXCLUDE_FIELDS + ["password"]
 
 
 class PatientUserProfileSerializer(serializers.ModelSerializer):
@@ -132,3 +131,14 @@ class DoctorUserProfileSerializer(serializers.ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
+
+class UserTokenObtainRequestSerializer(serializers.Serializer):
+    email = serializers.CharField()
+    password = serializers.CharField()
+
+
+class UserTokenObtainResponseSerializer(serializers.Serializer):
+    access = serializers.CharField()
+    refresh = serializers.CharField()
+    user = UserSerializer(read_only=True)
