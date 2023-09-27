@@ -54,7 +54,10 @@ class PatientUserProfileSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         validated_data["role"] = UserRoles.PATIENT
         user = get_user_model()(**validated_data)
-        validate_password(password, user)
+        try:
+            validate_password(password, user)
+        except ValidationError as exception:
+            raise serializers.ValidationError({"message": exception.message})
         user.set_password(password)
         user.save()
         PatientProfile.objects.create(**patient_profile_data, user=user)
@@ -68,7 +71,7 @@ class PatientUserProfileSerializer(serializers.ModelSerializer):
                 validate_password(password, instance)
                 instance.set_password(password)
             except ValidationError as exception:
-                raise serializers.ValidationError(str(exception))
+                raise serializers.ValidationError({"message": exception.message})
 
         if patient_profile_data:
             patient_profile = instance.patient
@@ -99,7 +102,10 @@ class DoctorUserProfileSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         validated_data["role"] = UserRoles.DOCTOR
         user = get_user_model()(**validated_data)
-        validate_password(password, user)
+        try:
+            validate_password(password, user)
+        except ValidationError as exception:
+            raise serializers.ValidationError({"message": exception.message})
         user.set_password(password)
         user.save()
         DoctorProfile.objects.create(**doctor_profile_data, user=user)
@@ -114,7 +120,7 @@ class DoctorUserProfileSerializer(serializers.ModelSerializer):
                 validate_password(password, instance)
                 instance.set_password(password)
             except ValidationError as exception:
-                raise serializers.ValidationError(str(exception))
+                raise serializers.ValidationError({"message": exception.message})
 
         if doctor_profile_data:
             doctor_profile = instance.doctor
