@@ -36,6 +36,7 @@ def setup_patients():
         user=user_two,
         date_of_birth="2000-01-02",
     )
+    print(patient_one.uhid, patient_two.uhid)
     return patient_one, patient_two
 
 

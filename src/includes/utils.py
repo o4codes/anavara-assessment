@@ -1,12 +1,11 @@
 import json
-import re
 import threading
 from functools import reduce
-from typing import TypeVar, Set, Union, Type
+from typing import Set, Type, TypeVar, Union
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Model
-from django.utils import timezone
+from django.utils.crypto import get_random_string
 from rest_framework import serializers
 
 DJANGO_MODEL = TypeVar("DJANGO_MODEL", bound=Model)
@@ -59,25 +58,12 @@ def generate_sec_id(
     Returns:
         str: item code
     """
-    CURRENT_YEAR = str(timezone.now().year)
-    CURRENT_MONTH = str(timezone.now().month).zfill(2)
-    pattern_string = f"{CURRENT_YEAR}{CURRENT_MONTH}"
-    re_pattern = re.compile(f"{pattern_string}(.*)")
     serial_no = 1
-
-    with GLOBAL_LOCK:
-        filter_kwargs = {
-            f"{sec_id_field}__contains": f"{CURRENT_YEAR}{CURRENT_MONTH}",
-        }
-        objects = model.objects.filter(**filter_kwargs)
-        if objects.count() > 0:
-            last_object = reduce(
-                lambda obj1, obj2: obj1 if obj1.id > obj2.id else obj2, objects
-            )
-            search_value = getattr(last_object, sec_id_field)
-            last_value = re_pattern.findall(search_value)[-1]
-            print(last_value)
-            if str(last_value).isdigit():
-                serial_no = int(re_pattern.findall(search_value)[-1]) + 1
-    unique_id = f"{prefix}{CURRENT_YEAR}{CURRENT_MONTH}{serial_no}"
+    last_object = model.objects.last()
+    if last_object:
+        value = getattr(last_object, sec_id_field)
+        last_character = value[-1]
+        if str(last_character).isdigit():
+            serial_no = int(last_character) + 1
+    unique_id = f"{prefix}-{get_random_string(5)}-{serial_no}"
     return unique_id

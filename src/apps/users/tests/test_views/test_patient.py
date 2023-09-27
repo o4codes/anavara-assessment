@@ -75,8 +75,14 @@ class PatientTests(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_get_patient(self):
+    def test_get_patient_success(self):
         url = reverse("patients-detail", kwargs={"pk": self.patient_one.user.pk})
         test_utils.authenticate_user(self.client, self.patient_one.user)
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_patiet_failure(self):
+        url = reverse("patients-detail", kwargs={"pk": "1234"})
+        test_utils.authenticate_user(self.client, self.patient_one.user)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
