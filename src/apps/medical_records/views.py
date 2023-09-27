@@ -5,14 +5,14 @@ from rest_framework.permissions import IsAuthenticated
 
 from .filters import MedicalRecordFilter
 from .models import MedicalRecord
-from .permissions import UserPermission
+from .permissions import MedicalRecordPermission
 from .serializers import MedicalRecordSerializer
 
 
 class MedicalRecordViewSet(ModelViewSet):
     queryset = MedicalRecord.objects.all().select_related("doctor", "patient")
     serializer_class = MedicalRecordSerializer
-    permission_classes = [IsAuthenticated, UserPermission]
+    permission_classes = [IsAuthenticated, MedicalRecordPermission]
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend,

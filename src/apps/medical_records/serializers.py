@@ -15,10 +15,10 @@ class MedicalRecordSerializer(serializers.ModelSerializer):
         source="patient",
         write_only=True,
     )
-    patient = user_serializers.UserPatientProfileSerializer(
+    patient = user_serializers.PatientUserProfileSerializer(
         read_only=True, source="patient.user"
     )
-    doctor = user_serializers.UserDoctorProfileSerializer(
+    doctor = user_serializers.DoctorUserProfileSerializer(
         read_only=True, source="doctor.user"
     )
 

@@ -3,7 +3,7 @@ from rest_framework import permissions
 from src.apps.users import enums as user_enums
 
 
-class UserPermission(permissions.BasePermission):
+class MedicalRecordPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user.role == user_enums.UserRoles.DOCTOR
 

@@ -7,7 +7,7 @@ services:
       dockerfile: .docker/Dockerfile
     command: python manage.py runserver 0.0.0.0:${BACKEND_PORT}
     volumes:
-      - .:/src
+      - ./src:/src
     env_file:
       - .env
     environment:
@@ -30,5 +30,18 @@ services:
     ports:
       - "5437:5432"
 
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
 volumes:
   postgres_data:
+  pgadmin-data:
