@@ -7,7 +7,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register("patients", views.PatientUserViewSet, basename="patients")
-router.register("doctors", views.DoctorUserViewSet)
+router.register("doctors", views.DoctorUserViewSet, basename="doctors")
 
 patient_router = routers.NestedDefaultRouter(router, "patients", lookup="patient")
 patient_router.register(

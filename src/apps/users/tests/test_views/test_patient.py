@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from src.apps.users import enums, models
+from src.apps.users import enums
 from src.apps.users.tests import utils as test_utils
 
 
@@ -81,7 +81,7 @@ class PatientTests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_patiet_failure(self):
+    def test_get_patient_failure(self):
         url = reverse("patients-detail", kwargs={"pk": "1234"})
         test_utils.authenticate_user(self.client, self.patient_one.user)
         response = self.client.get(url)
