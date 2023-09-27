@@ -52,7 +52,7 @@ class PatientUserProfileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         patient_profile_data = validated_data.pop("patient")
         password = validated_data.pop("password")
-        validated_data['role'] = UserRoles.PATIENT
+        validated_data["role"] = UserRoles.PATIENT
         user = get_user_model()(**validated_data)
         validate_password(password, user)
         user.set_password(password)
@@ -97,7 +97,7 @@ class DoctorUserProfileSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         doctor_profile_data = validated_data.pop("doctor")
         password = validated_data.pop("password")
-        validated_data['role'] = UserRoles.DOCTOR
+        validated_data["role"] = UserRoles.DOCTOR
         user = get_user_model()(**validated_data)
         validate_password(password, user)
         user.set_password(password)
