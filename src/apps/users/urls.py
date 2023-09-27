@@ -9,7 +9,11 @@ router.register("patients", views.PatientUserViewSet)
 router.register("doctors", views.DoctorUserViewSet)
 
 patient_router = routers.NestedDefaultRouter(router, "patients", lookup="patient")
-patient_router.register("medical_records", medical_records_views.PatientMedicalRecordViewSet, basename="patient_medical_records")
+patient_router.register(
+    "medical_records",
+    medical_records_views.PatientMedicalRecordViewSet,
+    basename="patient_medical_records",
+)
 
 urlpatterns = [
     path("users/", include(router.urls)),

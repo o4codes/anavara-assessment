@@ -14,7 +14,7 @@ from .serializers import (
     DoctorUserProfileSerializer,
     UserTokenObtainResponseSerializer,
     UserTokenObtainRequestSerializer,
-UserSerializer
+    UserSerializer,
 )
 
 
@@ -49,7 +49,7 @@ class DoctorUserViewSet(viewsets.ModelViewSet):
 @extend_schema_view(
     post=extend_schema(
         request=UserTokenObtainRequestSerializer,
-        responses={200: UserTokenObtainResponseSerializer}
+        responses={200: UserTokenObtainResponseSerializer},
     )
 )
 class UserTokenObtainPairView(TokenObtainPairView):
@@ -60,7 +60,7 @@ class UserTokenObtainPairView(TokenObtainPairView):
             serializer.is_valid(raise_exception=True)
             user_data = UserSerializer(serializer.user).data
             validated_data = serializer.validated_data
-            validated_data['user'] = user_data
+            validated_data["user"] = user_data
 
         except TokenError as e:
             raise InvalidToken(e.args[0])
