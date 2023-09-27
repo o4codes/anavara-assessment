@@ -1,14 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from src.includes.drf_helpers import (
-    UUIDPrimaryKeyMixin,
-    DateHistoryMixin,
-)
 
 from src.apps.users.enums import Gender, UserRoles
 from src.apps.users.managers import UserManager
+from src.includes.drf_helpers import DateHistoryMixin, UUIDPrimaryKeyMixin
 
 
 class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryMixin):
@@ -50,3 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryM
 
     def __str__(self):
         return self.email
+
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+        ordering = ["-created_at"]
