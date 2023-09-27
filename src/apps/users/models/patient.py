@@ -6,6 +6,7 @@ from src.includes.drf_helpers import (
     BaseValidateMixin,
 )
 from src.includes import utils
+from .user import User
 
 
 class PatientProfile(UUIDPrimaryKeyMixin, BaseValidateMixin):

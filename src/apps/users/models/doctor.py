@@ -7,6 +7,8 @@ from src.includes.drf_helpers import (
 )
 from src.includes import utils
 
+from .user import User
+
 
 class DoctorProfile(UUIDPrimaryKeyMixin, BaseValidateMixin):
     UMID_PREFIX = "DOC"
