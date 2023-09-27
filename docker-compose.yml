@@ -7,7 +7,7 @@ services:
       dockerfile: .docker/Dockerfile
     command: python manage.py runserver 0.0.0.0:${BACKEND_PORT}
     volumes:
-      - ./src:/src
+      - .:/app/
     env_file:
       - .env
     environment:
