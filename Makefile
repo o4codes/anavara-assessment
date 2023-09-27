@@ -1,4 +1,12 @@
 PYTHON = .venv/bin/python
+PIP = .venv/bin/pip
+
+.PHONY : dev-setup
+dev-setup:
+	python3 -m venv .venv
+	$(PIP) install -r requirements.txt
+	pre-commit install
+
 
 .PHONY : dev-server
 dev-server:
