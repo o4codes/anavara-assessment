@@ -15,12 +15,15 @@ RUN apt-get update && apt-get install -y libpq-dev
 
 # Copy the requirements file and install dependencies
 RUN pip install --upgrade pip
-COPY requirements.txt /app/
+COPY requirements.txt .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project code into the container
-COPY . /app/
+COPY .docker/dev_web_entrypoint.sh /app/.docker/dev_web_entrypoint.sh
 RUN chmod +x .docker/dev_web_entrypoint.sh
-ENTRYPOINT [".docker/dev_web_entrypoint.sh"]
+COPY . .
+
+# copy entrypoint.sh
+ENTRYPOINT ["sh", "/app/.docker/dev_web_entrypoint.sh"]
