@@ -33,7 +33,12 @@ class PasswordForgotViewSet(viewsets.ViewSet):
         reset_url = f'{env_config("RESET_PASSWORD_URL")}/{user_id}/{token}/'
 
         # Send the password reset email to the user
-        user.send_reset_email(reset_url)
+        user.send_email(
+            context={"reset_url": reset_url},
+            subject="Password reset",
+            message="Please click the link below to reset your password",
+            template="auth/password_reset_email.html",
+        )
 
         return Response({"message": "Password reset email sent"})
 

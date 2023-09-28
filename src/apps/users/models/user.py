@@ -1,5 +1,7 @@
+from decouple import config as env_config
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
 from src.apps.users.enums import Gender, UserRoles
@@ -52,6 +54,25 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryM
         verbose_name_plural = "Users"
         ordering = ["-created_at"]
 
-    def send_reset_email(self, reset_url):
-        # SENDS MAIL FOR RESET PASSWORD
-        pass
+    def send_email(
+        self,
+        context: dict,
+        subject: str,
+        message: str,
+        template: str = None,
+    ):
+        from django.core.mail import send_mail
+
+        html_message = None
+        if template:
+            html_message = render_to_string(
+                template,
+                context,
+            )
+        return send_mail(
+            subject=subject,
+            message=message,
+            from_email=env_config("EMAIL_HOST_USER", default="admin@anavara.com"),
+            recipient_list=[self.email],
+            html_message=html_message,
+        )
