@@ -19,6 +19,9 @@ class MedicalRecordPermission(permissions.BasePermission):
 
 class PatientMedicalRecordPermission(permissions.BasePermission):
     def has_permission(self, request, view):
+        patient = getattr(request.user, "patient", None)
+        if patient:
+            return str(patient.pk) == view.kwargs.get("patient_pk")
         return request.user and request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):

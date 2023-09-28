@@ -1,9 +1,11 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import get_user_model
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.exceptions import NotFound
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+
+from src.apps.users import models as user_models
 
 from .filters import MedicalRecordFilter
 from .models import MedicalRecord
@@ -39,9 +41,9 @@ class PatientMedicalRecordViewSet(ReadOnlyModelViewSet):
     def get_queryset(self):
         User = get_user_model()
         try:
-            user = User.objects.get(pk=self.kwargs["patient_pk"])
+            user_models.PatientProfile.objects.get(pk=self.kwargs["patient_pk"])
         except User.DoesNotExist:
             raise NotFound(detail="Patient not found")
         return MedicalRecord.objects.filter(
-            patient__user__id=self.kwargs["patient_pk"]
+            patient__id=self.kwargs["patient_pk"]
         ).select_related("doctor", "patient")
