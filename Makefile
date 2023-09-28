@@ -18,3 +18,10 @@ test:
 	sudo docker-compose up -d
 	sudo docker-compose exec web python manage.py test
 	sudo docker-compose down
+
+
+.PHONY : createsuperuser
+createsuperuser:
+	sudo docker-compose up -d
+	sudo docker-compose exec web python manage.py createsuperuser
+	sudo docker-compose down
