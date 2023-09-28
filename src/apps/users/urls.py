@@ -16,7 +16,16 @@ patient_router.register(
     basename="patient_medical_records",
 )
 
+auth_router = routers.DefaultRouter()
+auth_router.register(
+    "password/forgot", views.PasswordForgotViewSet, basename="forgot-password"
+)
+auth_router.register(
+    "password/reset", views.PasswordResetViewSet, basename="reset-password"
+)
+
 urlpatterns = [
     path("users/", include(router.urls)),
     path("users/", include(patient_router.urls)),
+    path("auth/", include(auth_router.urls)),
 ]

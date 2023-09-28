@@ -51,3 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin, UUIDPrimaryKeyMixin, DateHistoryM
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-created_at"]
+
+    def send_reset_email(self, reset_url):
+        # SENDS MAIL FOR RESET PASSWORD
+        pass

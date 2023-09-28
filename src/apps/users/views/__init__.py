@@ -1,3 +1,4 @@
-from .user import UserTokenObtainPairView
-from .patient import PatientUserViewSet
+from .auth import PasswordForgotViewSet, PasswordResetViewSet
 from .doctor import DoctorUserViewSet
+from .patient import PatientUserViewSet
+from .user import UserTokenObtainPairView
