@@ -6,7 +6,8 @@ This is a coding assessment which implements a health api for managing medical r
 1. In order to setup this project for contribution ensure you have the following installaed:
     a. docker 
     b. docker-compose
-2. To Setup for for local development run the following command:
+    c. python version 3.9 or higher
+2. To Setup for local development run the following command:
     ```bash
     make dev-setup
     ```
