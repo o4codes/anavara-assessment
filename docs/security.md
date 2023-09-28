@@ -13,6 +13,7 @@ preventing replay attacks.
 2. Permission: Access to certain data and actions carried out, are controlled properly. There are two types of user roles
 for this project namely: Patient and Doctor. A superadmin can also exists, without the need to pick a certain role.
 Each user type has its own set of permissions, which are used to control access to certain resources.
+During creation of medical records, doctor information is populated by presently logged in doctor.
 
 ### Patient Permissions
 
